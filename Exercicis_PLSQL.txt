@@ -1,0 +1,52 @@
+EJERCICIO1
+
+CREATE TABLE messages (results VARCHAR2(60));
+
+SET SERVEROUTPUT ON;
+
+DECLARE
+aux NUMBER(4,2);
+
+BEGIN
+FOR i IN 1..10 LOOP
+IF i <>6 AND i<>8 THEN
+DBMS_OUTPUT.PUT_LINE(i);
+INSERT INTO MESSAGES VALUES(i);
+END IF;
+END LOOP;
+END;
+
+
+
+EJERCICIO2
+
+ACCEPT emple PROMPT "Introduzca el numero de empleado";
+
+DECLARE
+v_emple emp.empno%TYPE :=&emple;
+v_sal emp.sal%TYPE;
+v_cuantos number;
+BEGIN
+SELECT sal INTO v_sal FROM emp WHERE empno = v_emple;
+
+IF 
+  v_sal <1000 THEN
+    UPDATE emp SET comm = sal*0.10 WHERE empno = v_emple;
+END IF;    
+
+IF 
+  v_sal BETWEEN 1000 AND 1500 THEN
+    UPDATE emp SET comm = sal*0.15 WHERE empno = v_emple;
+END IF;
+
+IF
+  v_sal >1500 THEN
+    UPDATE emp SET comm = sal*0.20 WHERE empno = v_emple;
+END IF;
+
+SELECT COUNT(*) INTO v_cuantos FROM emp WHERE sal IS NULL;
+IF
+  v_sal IS NULL THEN
+  DBMS_OUTPUT.PUT_LINE("El empleado"||v_emple||" no tiene comisión");
+END IF;
+END;
